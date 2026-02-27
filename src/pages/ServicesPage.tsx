@@ -1,103 +1,128 @@
-import React from "react";
-import { motion } from "framer-motion";
-import Footer from "../components/Footer";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { 
+  Code2, Layout, Database, ShoppingCart, 
+  Share2, Search, Smartphone, Cloud, ArrowUpRight 
+} from 'lucide-react';
 
 const services = [
   {
-    title: "Software Solution",
-    desc: "Custom enterprise-grade software development tailored to streamline operations, enhance productivity, and scale business performance."
+    title: "Software Solutions",
+    icon: Code2,
+    desc: "From standalone desktop applications to complex client-server architectures, we build proprietary software that drives competitive advantage. Our expertise spans .NET, Java, and Python ecosystems.",
+    features: ["Custom ERP/CRM", "Legacy Migration", "Enterprise Integration"]
   },
   {
-    title: "Web Solution",
-    desc: "High-performance, secure, and scalable web platforms built using modern technologies and best-in-class architecture."
+    title: "Web Solutions",
+    icon: Layout,
+    desc: "We deliver high-performance, responsive web platforms that serve as the digital cornerstone for India's finest organizations. Our focus is on UI/UX that converts visitors into loyal clients.",
+    features: ["Progressive Web Apps", "Interactive Demos", "Portal Development"]
   },
   {
     title: "CMS Development",
-    desc: "Flexible and robust content management systems enabling seamless digital publishing and operational efficiency."
+    icon: Database,
+    desc: "Empower your non-technical teams with robust Content Management Systems. We specialize in headless CMS and custom WordPress/Kentico architectures that make content updates seamless.",
+    features: ["Role-based Access", "SEO Optimized Architecture", "Multi-language Support"]
   },
   {
     title: "E-Commerce",
-    desc: "Full-scale e-commerce solutions including payment integration, analytics, and conversion optimization."
+    icon: ShoppingCart,
+    desc: "Launch global-ready online stores with secure payment gateways, inventory sync, and conversion-optimized checkouts. We build on Shopify, WooCommerce, and custom frameworks.",
+    features: ["Secure Payment Setup", "Inventory Management", "User Analytics"]
   },
   {
     title: "Social Media Services",
-    desc: "Strategic digital brand positioning, engagement optimization, and growth-driven social campaigns."
+    icon: Share2,
+    desc: "Move beyond 'likes.' We provide data-driven social media branding and marketplace integrations that place your products directly in the hands of your target audience.",
+    features: ["Brand Storytelling", "Audience Growth", "Campaign Tracking"]
   },
   {
-    title: "SEO",
-    desc: "Data-driven search engine optimization strategies that improve rankings, visibility, and organic growth."
+    title: "SEO Optimization",
+    icon: Search,
+    desc: "Search Engine Optimization is an investment, not a cost. We handle technical SEO, schema markup, and content strategy to ensure you dominate search rankings.",
+    features: ["On-Page/Off-Page", "Technical Audits", "Core Web Vitals"]
   },
   {
-    title: "Mobile Application Development",
-    desc: "Cross-platform and native mobile apps engineered for performance, scalability, and user engagement."
+    title: "Mobile App Development",
+    icon: Smartphone,
+    desc: "Native and Cross-Platform (React Native/Flutter) applications designed for extreme usability. We build mobile tools that function flawlessly in low-connectivity environments.",
+    features: ["iOS & Android", "Offline Capabilities", "User-Centric UI"]
   },
   {
     title: "Web Hosting",
-    desc: "Secure, reliable, and high-availability hosting infrastructure with optimized uptime and performance monitoring."
+    icon: Cloud,
+    desc: "Institutional grade hosting with 99.9% uptime. From domain registration to managed cloud server administration, we ensure your digital assets are always live and secure.",
+    features: ["SSL Certification", "24/7 Monitoring", "Global CDN"]
   }
 ];
 
 export default function ServicesPage() {
   return (
-    <main className="bg-white text-gray-900">
-
-      {/* HERO */}
-      <section className="pt-28 pb-24 bg-gradient-to-br from-blue-700 to-purple-700 text-white text-center">
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-5xl font-extrabold mb-6"
+    <main className="bg-white">
+      {/* Header */}
+      <section className="pt-32 pb-20 bg-slate-900 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+          <motion.h1 
+            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+            className="text-5xl md:text-7xl font-black tracking-tighter mb-6"
           >
-            Comprehensive Digital Solutions
+            END-TO-END <br/> <span className="text-blue-400 italic">SOLUTIONS.</span>
           </motion.h1>
-          <p className="text-lg opacity-90 max-w-3xl mx-auto">
-            From enterprise software to digital marketing ecosystems,
-            HITCS delivers integrated technology solutions designed for scale and performance.
+          <p className="text-slate-400 text-xl max-w-2xl mx-auto font-light">
+            Providing the technical backbone for India's most ambitious organizations since 2009.
           </p>
         </div>
       </section>
 
-      {/* SERVICES GRID */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white border border-gray-200 p-8 rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300"
-            >
-              <h3 className="text-xl font-bold mb-4 text-blue-700">
-                {service.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {service.desc}
-              </p>
-            </motion.div>
-          ))}
+      {/* Services Grid */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-100 border border-slate-100">
+            {services.map((service, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ backgroundColor: '#F8FAFC' }}
+                className="bg-white p-10 group transition-all duration-500 flex flex-col justify-between h-full"
+              >
+                <div>
+                  <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                    <service.icon className="text-white" size={24} />
+                  </div>
+                  <h3 className="text-2xl font-black text-slate-900 mb-4">{service.title}</h3>
+                  <p className="text-slate-500 leading-relaxed mb-8">{service.desc}</p>
+                </div>
+                
+                <ul className="space-y-3">
+                  {service.features.map((feat, idx) => (
+                    <li key={idx} className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                       <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                       {feat}
+                    </li>
+                  ))}
+                  <li className="pt-6">
+                    <button className="flex items-center gap-2 text-blue-600 text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all">
+                        View Case Study <ArrowUpRight size={14} />
+                    </button>
+                  </li>
+                </ul>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-blue-700 text-white text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="mb-8 opacity-90">
-            Partner with HITCS to build scalable, secure, and future-ready digital solutions.
-          </p>
-          <button className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
-            Contact Our Experts
-          </button>
+      {/* Trust Banner */}
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row justify-between items-center gap-12">
+            <h2 className="text-4xl font-black tracking-tight max-w-xl">
+              Ready to transform your technical infrastructure?
+            </h2>
+            <button className="bg-white text-blue-600 px-12 py-5 text-xs font-black uppercase tracking-[0.3em] hover:bg-slate-900 hover:text-white transition-all">
+                Initiate Project
+            </button>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }
