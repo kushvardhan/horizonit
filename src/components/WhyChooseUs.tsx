@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// React import not required in modern React
+
 import { motion } from 'framer-motion';
 import { 
   ShieldCheck, Zap, Users, Globe, Clock, Award, Plus 

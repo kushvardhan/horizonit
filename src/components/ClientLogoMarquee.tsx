@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import { useMemo } from "react";
 import {
   motion,
   useSpring,
@@ -125,7 +125,7 @@ const ClientShowcase = () => {
             drag="x"
             dragConstraints={{ left: -10000, right: 10000 }}
             dragElastic={0.2}
-            onDrag={(e, info) => x.set(x.get() + info.delta.x)}
+            onDrag={(_, info) => x.set(x.get() + info.delta.x)}
             style={{ x: wrappedX }}
           >
             {list.map((client, idx) => (

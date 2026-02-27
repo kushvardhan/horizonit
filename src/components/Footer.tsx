@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll } from "framer-motion";
 import {
   Facebook,
   Instagram,
@@ -61,7 +61,7 @@ const Footer = () => {
     offset: ["start end", "end start"],
   });
 
-  const brandY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  // const brandY = useTransform(scrollYProgress, [0, 1], [80, -80]); // reserved for future animation
 
   const footerLinks = {
     Solutions: [

@@ -165,7 +165,7 @@ export default function Projects() {
             {/* Glow on hover */}
             <div
               className="absolute inset-0 rounded-xl 
-                    bg-gradient-to-r 
+                    bg-linear-to-r 
                     from-blue-500/0 
                     via-blue-500/10 
                     to-indigo-500/0
@@ -253,9 +253,7 @@ export default function Projects() {
                     <div
                       className="absolute inset-0 bg-linear-to-t
                       from-white
-                      via-white/90
                       via-white/60
-                      via-white/30
                       to-transparent"
                     />
 

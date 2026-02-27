@@ -1,4 +1,3 @@
-import React from 'react';
 import HeroSlider from '../components/HeroSlider';
 import WhoWeAre from '../components/WhoWeAre';
 import Services from '../components/Services';
