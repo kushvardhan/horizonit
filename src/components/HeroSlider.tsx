@@ -98,9 +98,6 @@ export default function HeroSlider() {
                 </div>
             ))}
 
-            {/* Blue accent bar */}
-            <div className="absolute top-0 left-0 w-1.5 h-full bg-hitcs-accent z-10" />
-
             {/* Content */}
             <div className="relative z-10 flex flex-col justify-center min-h-screen max-w-7xl mx-auto px-6 lg:px-10 pt-24 pb-32">
                 <div
