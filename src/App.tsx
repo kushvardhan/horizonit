@@ -1,0 +1,23 @@
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+
+// pages
+import HomePage from './pages/HomePage';
+import ServicesPage from './pages/ServicesPage';
+import AboutPage from './pages/AboutPage';
+
+function App() {
+    return (
+        <div className="min-h-screen bg-white text-hitcs-black font-inter overflow-x-hidden">
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="*" element={<HomePage />} />
+            </Routes>
+        </div>
+    );
+}
+
+export default App;
