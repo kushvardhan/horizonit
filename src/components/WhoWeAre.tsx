@@ -42,7 +42,7 @@ export default function WhoWeAre() {
                             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-hitcs-accent/30 z-0" />
                             <div className="relative z-10 overflow-hidden">
                                 <img
-                                    src="https://mysterious-gold-ukj-draft.caffeine.xyz/assets/generated/whoweare-bg.dim_960x720.png?w=960&h=720&fit=crop"
+                                    src="/whoweare-bg.dim_960x720.png?w=960&h=820&fit=crop"
                                     alt="HITCS — Who We Are"
                                     className="w-full h-auto object-cover"
                                     style={{ maxHeight: '520px', objectFit: 'cover' }}
