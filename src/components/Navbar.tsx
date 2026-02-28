@@ -6,9 +6,9 @@ const navLinks = [
     { label: 'Home', to: '/' },
     { label: 'Services', to: '/services' },
     { label: 'About', to: '/about' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Why Us', href: '#why-us' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Clients', to: '/clients' },
+    { label: 'Careers', to: '/careers' },
+    { label: 'Contact', to: '/contact' },
 ];
 
 export default function Navbar() {
@@ -23,13 +23,6 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleNavClick = (href: string) => {
-        setMobileOpen(false);
-        const el = document.querySelector(href);
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
 
     return (
         <>
@@ -53,51 +46,32 @@ export default function Navbar() {
 
                         {/* Desktop Nav */}
                         <div className="hidden md:flex items-center gap-8">
-                            {navLinks.map((link) =>
-                                link.to ? (
-                                    <NavLink
-                                        key={link.label}
-                                        to={link.to}
-                                        className={({ isActive }) =>
-                                            `relative text-sm font-medium tracking-wide transition-colors duration-200 group ${
-                                                scrolled
-                                                    ? 'text-hitcs-black hover:text-hitcs-accent'
-                                                    : 'text-white/90 hover:text-white'
-                                            } ${isActive ? 'font-black' : ''}`
-                                        }
-                                    >
-                                        {link.label}
-                                        <span
-                                            className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
-                                                scrolled ? 'bg-hitcs-accent' : 'bg-white'
-                                            }`}
-                                        />
-                                    </NavLink>
-                                ) : (
-                                    <button
-                                        key={link.label}
-                                        onClick={() => handleNavClick(link.href!)}
-                                        className={`relative text-sm font-medium tracking-wide transition-colors duration-200 group ${
+                            {navLinks.map((link) => (
+                                <NavLink
+                                    key={link.label}
+                                    to={link.to!}
+                                    className={({ isActive }) =>
+                                        `relative text-sm font-medium tracking-wide transition-colors duration-200 group ${
                                             scrolled
                                                 ? 'text-hitcs-black hover:text-hitcs-accent'
                                                 : 'text-white/90 hover:text-white'
+                                        } ${isActive ? 'font-black' : ''}`
+                                    }
+                                >
+                                    {link.label}
+                                    <span
+                                        className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
+                                            scrolled ? 'bg-hitcs-accent' : 'bg-white'
                                         }`}
-                                    >
-                                        {link.label}
-                                        <span
-                                            className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
-                                                scrolled ? 'bg-hitcs-accent' : 'bg-white'
-                                            }`}
-                                        />
-                                    </button>
-                                )
-                            )}
+                                    />
+                                </NavLink>
+                            ))}
                         </div>
 
                         {/* CTA + Hamburger */}
                         <div className="flex items-center gap-4">
-                            <button
-                                onClick={() => handleNavClick('#contact')}
+                            <NavLink
+                                to="/contact"
                                 className={`hidden md:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold tracking-wide transition-all duration-300 ${
                                     scrolled
                                         ? 'bg-hitcs-blue text-white hover:bg-hitcs-accent shadow-blue'
@@ -105,7 +79,7 @@ export default function Navbar() {
                                 }`}
                             >
                                 Get Started
-                            </button>
+                            </NavLink>
                             <button
                                 className={`md:hidden p-2 transition-colors duration-200 ${
                                     scrolled ? 'text-hitcs-black' : 'text-white'
@@ -141,36 +115,26 @@ export default function Navbar() {
                             </button>
                         </div>
                         <nav className="flex flex-col px-6 py-8 gap-1 flex-1">
-                            {navLinks.map((link, i) =>
-                                link.to ? (
-                                    <NavLink
-                                        key={link.label}
-                                        to={link.to}
-                                        onClick={() => setMobileOpen(false)}
-                                        className="text-left text-base font-medium text-hitcs-black hover:text-hitcs-accent hover:pl-2 transition-all duration-200 py-3 border-b border-hitcs-gray-light"
-                                        style={{ animationDelay: `${i * 60}ms` }}
-                                    >
-                                        {link.label}
-                                    </NavLink>
-                                ) : (
-                                    <button
-                                        key={link.label}
-                                        onClick={() => { handleNavClick(link.href!); setMobileOpen(false); }}
-                                        className="text-left text-base font-medium text-hitcs-black hover:text-hitcs-accent hover:pl-2 transition-all duration-200 py-3 border-b border-hitcs-gray-light"
-                                        style={{ animationDelay: `${i * 60}ms` }}
-                                    >
-                                        {link.label}
-                                    </button>
-                                )
-                            )}
+                            {navLinks.map((link, i) => (
+                            <NavLink
+                                key={link.label}
+                                to={link.to!}
+                                onClick={() => setMobileOpen(false)}
+                                className="text-left text-base font-medium text-hitcs-black hover:text-hitcs-accent hover:pl-2 transition-all duration-200 py-3 border-b border-hitcs-gray-light"
+                                style={{ animationDelay: `${i * 60}ms` }}
+                            >
+                                {link.label}
+                            </NavLink>
+                        ))}
                         </nav>
                         <div className="px-6 pb-8">
-                            <button
-                                onClick={() => handleNavClick('#contact')}
+                            <NavLink
+                                to="/contact"
                                 className="w-full bg-hitcs-blue text-white py-3 text-sm font-semibold tracking-wide hover:bg-hitcs-accent transition-colors duration-300"
+                                onClick={() => setMobileOpen(false)}
                             >
                                 Get Started
-                            </button>
+                            </NavLink>
                         </div>
                     </div>
                 </div>

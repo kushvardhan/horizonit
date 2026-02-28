@@ -189,16 +189,41 @@ const Footer = () => {
                     </h4>
 
                     <ul className="space-y-3">
-                      {links.map((link) => (
-                        <li key={link}>
-                          <Link
-                            to="#"
-                            className="text-slate-500 hover:text-purple-600 text-sm md:text-base"
-                          >
-                            <ScrambleText text={link} />
-                          </Link>
-                        </li>
-                      ))}
+                      {links.map((link) => {
+                        // simple routing map based on label
+                        let dest = '/';
+                        switch (link) {
+                          case 'About Us':
+                            dest = '/about';
+                            break;
+                          case 'Careers':
+                            dest = '/careers';
+                            break;
+                          case 'Blog':
+                            dest = '/blog';
+                            break;
+                          case 'Privacy Policy':
+                            dest = '/privacy';
+                            break;
+                          case 'Terms':
+                            dest = '/terms';
+                            break;
+                          default:
+                            // anything else goes to services overview for now
+                            dest = '/services';
+                        }
+
+                        return (
+                          <li key={link}>
+                            <Link
+                              to={dest}
+                              className="text-slate-500 hover:text-purple-600 text-sm md:text-base"
+                            >
+                              <ScrambleText text={link} />
+                            </Link>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 ))}
@@ -293,9 +318,15 @@ const Footer = () => {
           <div>© {currentYear} HITCS Technologies</div>
 
           <div className="flex gap-4">
-            <span>Privacy</span>
-            <span>Terms</span>
-            <span>Security</span>
+            <Link to="/privacy" className="hover:text-purple-600">
+              Privacy
+            </Link>
+            <Link to="/terms" className="hover:text-purple-600">
+              Terms
+            </Link>
+            <Link to="/security" className="hover:text-purple-600">
+              Security
+            </Link>
           </div>
 
           <div className="font-medium text-slate-700">
