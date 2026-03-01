@@ -70,7 +70,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <div className="text-xs text-white/50 font-medium tracking-wide mb-1">Email</div>
-                                        <div className="text-sm text-white font-medium">hello@hitcs.com</div>
+                                        <div className="text-sm text-white font-medium">info@hitcs.in</div>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -79,7 +79,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <div className="text-xs text-white/50 font-medium tracking-wide mb-1">Phone</div>
-                                        <div className="text-sm text-white font-medium">+1 (800) HITCS-IT</div>
+                                        <div className="text-sm text-white font-medium">+91 93081 99900</div>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -88,7 +88,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <div className="text-xs text-white/50 font-medium tracking-wide mb-1">Headquarters</div>
-                                        <div className="text-sm text-white font-medium">Global Delivery Centers<br />30+ Countries</div>
+                                        <div className="text-sm text-white font-medium">HITCS,206 Giridhar Plaza, Harmu Road, Ranchi - 834001, Jharkhand, India</div>
                                     </div>
                                 </div>
                             </div>

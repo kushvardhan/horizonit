@@ -7,7 +7,6 @@ import FeaturedProjects from '../components/FeaturedProjects';
 import BusinessProcess from '../components/BusinessProcess';
 import DataImpact from '../components/DataImpact';
 import Contact from '../components/Contact';
-import Footer from '../components/Footer';
 
 export default function HomePage() {
     return (
@@ -21,7 +20,6 @@ export default function HomePage() {
             <BusinessProcess />
             <DataImpact />
             <Contact />
-            <Footer />
         </>
     );
 }
