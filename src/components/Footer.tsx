@@ -53,6 +53,20 @@ const ScrambleText: React.FC<{ text: string; className?: string }> = ({
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [newspaper, setNewspaper] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  function submitNewspaper(e) {
+    e.preventDefault();
+    console.log("submitting", newspaper);
+
+    setNewspaper(""); // clears input
+    setSubmitted(true); // show message
+
+    setTimeout(() => {
+      setSubmitted(false); // hide message after 3s (optional)
+    }, 2000);
+  }
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -104,8 +118,6 @@ const Footer = () => {
       {/* Top Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] md:w-[1000px] h-[200px] md:h-[300px] bg-purple-200 blur-[120px] opacity-20" />
 
-      
-
       {/* MAIN CONTAINER */}
       <div className="max-w-[2400px] mx-auto px-4 md:px-4 relative z-10">
         <div
@@ -123,19 +135,18 @@ const Footer = () => {
         >
           {/* MAIN GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-12">
-
             {/* LEFT */}
             <div className="lg:col-span-5 space-y-6 md:space-y-8">
-              <img src="/new_hitcsLogo.png" className="h-10 md:h-12" />
+              <img src="/new_hitcsLogo.png" className="h-12 md:h-16" />
 
-              <p className="mt-3 text-sm md:text-base text-slate-600 max-w-md">
+              <p className="mt-3 text-sm md:text-base text-black max-w-md">
                 Delivering end-to-end software solutions and technology-driven
                 business transformation for India's top organizations,
                 empowering growth through innovation and efficiency.
               </p>
 
               {/* CONTACT */}
-              <div className="space-y-3 text-sm md:text-base text-slate-600">
+              <div className="space-y-3 text-sm md:text-base text-black">
                 <div className="flex items-center gap-3">
                   <Mail size={16} />
                   info@hitcs.com
@@ -164,11 +175,12 @@ const Footer = () => {
                       rounded-lg md:rounded-xl
                       bg-white
                       border
-                      border-slate-200
-                      text-slate-600
+                      border-slate-400
+                      text-slate-900
                       transition
                       ${hover}
                       hover:text-white
+                      cursor-pointer
                     `}
                   >
                     <Icon size={18} />
@@ -179,45 +191,44 @@ const Footer = () => {
 
             {/* RIGHT */}
             <div className="lg:col-span-7">
-
               {/* LINKS */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-10">
                 {Object.entries(footerLinks).map(([title, links]) => (
                   <div key={title}>
-                    <h4 className="text-xs font-bold tracking-widest text-purple-400 mb-3">
+                    <h4 className="text-sm font-bold tracking-widest text-purple-600 mb-3">
                       {title}
                     </h4>
 
                     <ul className="space-y-3">
                       {links.map((link) => {
                         // simple routing map based on label
-                        let dest = '/';
+                        let dest = "/";
                         switch (link) {
-                          case 'About Us':
-                            dest = '/about';
+                          case "About Us":
+                            dest = "/about";
                             break;
-                          case 'Careers':
-                            dest = '/careers';
+                          case "Careers":
+                            dest = "/careers";
                             break;
-                          case 'Blog':
-                            dest = '/blog';
+                          case "Blog":
+                            dest = "/blog";
                             break;
-                          case 'Privacy Policy':
-                            dest = '/privacy';
+                          case "Privacy Policy":
+                            dest = "/privacy";
                             break;
-                          case 'Terms':
-                            dest = '/terms';
+                          case "Terms":
+                            dest = "/terms";
                             break;
                           default:
                             // anything else goes to services overview for now
-                            dest = '/services';
+                            dest = "/services";
                         }
 
                         return (
                           <li key={link}>
                             <Link
                               to={dest}
-                              className="text-slate-500 hover:text-purple-600 text-sm md:text-base"
+                              className="text-slate-800 hover:text-purple-600 text-sm md:text-base"
                             >
                               <ScrambleText text={link} />
                             </Link>
@@ -233,7 +244,7 @@ const Footer = () => {
               <div className="p-5 md:p-8 rounded-xl md:rounded-2xl bg-white border border-slate-200">
                 <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h4 className="font-semibold flex items-center gap-2 text-sm md:text-base text-purple-800">
+                    <h4 className="font-semibold flex items-center gap-2 text-sm md:text-base text-slate-700">
                       <CheckCircle2 size={18} />
                       Stay ahead
                     </h4>
@@ -243,46 +254,80 @@ const Footer = () => {
                     </p>
                   </div>
 
-                  <div className="relative w-full md:w-[320px]">
+                  <form
+                    onSubmit={submitNewspaper}
+                    className="relative w-full md:w-[320px]"
+                  >
                     <input
+                      value={newspaper}
+                      onChange={(e) => setNewspaper(e.target.value)}
                       placeholder="Work email"
                       type="email"
                       className="
-                        w-full
-                        h-12
-                        pl-4
-                        pr-14
-                        border
-                        border-black/20
-                        rounded-lg
-                        outline-none
-                        text-sm md:text-base
-                        focus:border-purple-300
-                        focus:ring-1
-                        focus:ring-black/20
-                      "
+          w-full
+          h-12
+          pl-4
+          pr-14
+          border
+          border-black/20
+          rounded-lg
+          outline-none
+          text-sm md:text-base
+          text-slate-700
+          placeholder:text-slate-400
+          focus:border-purple-300
+          focus:ring-1
+          focus:ring-black/20
+          transition
+        "
                     />
 
                     <button
+                      type="submit"
                       className="
-                        absolute
-                        right-2
-                        top-1/2
-                        -translate-y-1/2
-                        h-9 w-9
-                        flex
-                        items-center
-                        justify-center
-                        rounded-md
-                        bg-black
-                        text-white
-                        transition
-                        hover:scale-105
-                      "
+          absolute
+          right-2
+          top-1/2
+          -translate-y-1/2
+          h-9 w-9
+          flex
+          items-center
+          justify-center
+          rounded-md
+          bg-black
+          text-white
+          transition
+          hover:scale-105
+        "
                     >
                       <Send size={16} />
                     </button>
-                  </div>
+
+                    {/* Success Popup */}
+                    {submitted && (
+                      <div
+                        className="
+          absolute
+          inset-0
+          flex
+          items-center
+          justify-center
+          bg-green-50
+          border
+          border-green-200
+          rounded-lg
+          animate-in
+          fade-in
+          duration-300
+        "
+                      >
+                        <div className="flex items-center gap-2 text-green-700 font-semibold text-sm">
+                          <CheckCircle2 size={18} />
+                          Submitted
+                        </div>
+                      </div>
+                    )}
+                  </form>
                 </div>
               </div>
             </div>
@@ -329,9 +374,7 @@ const Footer = () => {
             </Link>
           </div>
 
-          <div className="font-medium text-slate-700">
-            info@hitcs.com
-          </div>
+          <div className="font-medium text-slate-700">info@hitcs.com</div>
         </div>
       </div>
     </footer>
