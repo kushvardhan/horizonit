@@ -24,12 +24,12 @@ const ClientShowcase = () => {
   const x = useMotionValue(0);
 
   const springX = useSpring(x, {
-    damping: 60,
-    stiffness: 300,
-    mass: 1,
+    damping: 100,
+    stiffness: 400,
+    mass: 0.1,
   });
 
-  const contentWidth = 2520;
+  const contentWidth = 2800;
 
   const wrappedX = useTransform(springX, (value) => {
     const wrapped = ((value % contentWidth) - contentWidth) % contentWidth;
@@ -37,113 +37,126 @@ const ClientShowcase = () => {
   });
 
   useAnimationFrame((_, delta) => {
-    const moveBy = delta * 0.05;
+    const moveBy = delta * 0.12;
     x.set(x.get() - moveBy);
   });
 
-  const list = useMemo(() => [...CLIENTS, ...CLIENTS], []);
+  const list = useMemo(() => [...CLIENTS, ...CLIENTS, ...CLIENTS], []);
 
-  const path1 =
-    "M-200,200 C200,-150 600,550 1000,200 C1400,-150 1800,550 2200,200";
-  const path2 =
-    "M-200,100 C400,600 800,-200 1200,300 C1600,700 2000,-100 2400,200";
+  const path1 = "M-200,250 C300,50 800,450 1300,250 C1800,50 2300,450 2800,250";
+  const path2 = "M-200,150 C400,550 900,-50 1400,350 C1900,650 2400,50 2900,250";
 
   return (
-    <section className="relative py-28 overflow-hidden bg-linear-to-b from-slate-100 via-white to-slate-50">
-
-      {/* ===== PREMIUM BACKGROUND WAVES ===== */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
+    <section className="relative py-20 md:py-32 overflow-hidden bg-white">
+      
+      {/* BACKGROUND WAVES */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <svg
-          viewBox="0 0 1400 400"
-          className="w-full h-full"
+          viewBox="0 0 2600 500"
+          className="w-full h-full opacity-45"
           preserveAspectRatio="none"
           fill="none"
         >
+          <defs>
+            <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#818cf8" stopOpacity="0" />
+              <stop offset="50%" stopColor="#6366f1" stopOpacity="0.65" />
+              <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
+            </linearGradient>
+
+            <filter id="dotGlow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
           {/* Wave 1 */}
           <motion.path
             d={path1}
-            stroke="url(#grad1)"
-            strokeWidth="5"
-            opacity="0.8"
-            style={{
-              filter: "drop-shadow(0 0 15px rgba(99,102,241,0.5))",
-            }}
-            animate={{ x: [0, -400, 0] }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            stroke="url(#waveGrad)"
+            strokeWidth="2.6"
+            opacity="0.75"
+            animate={{ x: [0, -150, 0] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           />
 
           {/* Wave 2 */}
           <motion.path
             d={path2}
-            stroke="url(#grad2)"
-            strokeWidth="5"
-            opacity="0.8"
-            style={{
-              filter: "drop-shadow(0 0 15px rgba(168,85,247,0.5))",
-            }}
-            animate={{ x: [-200, 200, -200] }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            stroke="url(#waveGrad)"
+            strokeWidth="2.6"
+            opacity="0.5"
+            animate={{ x: [-100, 100, -100] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#6366f1" stopOpacity="0" />
-              <stop offset="50%" stopColor="#6366f1" stopOpacity="1" />
-              <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
-            </linearGradient>
-
-            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#a855f7" stopOpacity="0" />
-              <stop offset="50%" stopColor="#a855f7" stopOpacity="1" />
-              <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
-            </linearGradient>
-          </defs>
+          {/* Dots */}
+          {[...Array(8)].map((_, i) => (
+            <motion.circle
+              key={i}
+              r="5"
+              fill={i % 2 === 0 ? "#6366f1" : "#d946ef"}
+              opacity="0.65"
+              filter="url(#dotGlow)"
+              initial={{ offsetDistance: "0%" }}
+              animate={{ offsetDistance: "100%" }}
+              transition={{
+                duration: 8 + i * 2,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 2,
+              }}
+              style={{
+                offsetPath: `path("${i % 2 === 0 ? path1 : path2}")`,
+              }}
+            />
+          ))}
         </svg>
       </div>
 
-      {/* ===== FOREGROUND CONTENT ===== */}
-      <div className="relative z-20">
-        <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-16">
+      {/* CONTENT */}
+      <div className="relative z-10">
+        <h2 className="text-center text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-24 px-4">
           Trusted by 60+ Global Enterprises
         </h2>
 
-        <div className="relative w-full overflow-hidden">
-          {/* Fade edges */}
-          <div className="absolute inset-y-0 left-0 w-24 bg-linear-to-r from-white to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-y-0 right-0 w-24 bg-linear-to-l from-white to-transparent pointer-events-none z-10" />
+        <div className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing">
+          
+          <div className="absolute inset-y-0 left-0 w-24 md:w-64 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 md:w-64 bg-gradient-to-l from-white via-white/80 to-transparent z-20 pointer-events-none" />
 
           <motion.div
-            className="flex gap-10 px-6"
+            className="flex gap-6 md:gap-12 px-4 py-10"
             drag="x"
-            dragConstraints={{ left: -10000, right: 10000 }}
-            dragElastic={0.2}
-            onDrag={(_, info) => x.set(x.get() + info.delta.x)}
+            dragConstraints={{ left: -contentWidth, right: contentWidth }}
+            dragElastic={0.1}
+            dragTransition={{
+              power: 0.2,
+              timeConstant: 250,
+              modifyTarget: (target) => Math.round(target / 100) * 100,
+            }}
+            onDrag={(_, info) => {
+              x.set(x.get() + info.delta.x);
+            }}
             style={{ x: wrappedX }}
           >
             {list.map((client, idx) => (
               <div
                 key={`${client.id}-${idx}`}
-                className="flex-none w-64 h-24 flex items-center justify-center 
-                           bg-white/60 backdrop-blur-xl 
-                           rounded-3xl shadow-xl 
-                           border border-white/40 
-                           cursor-grab 
-                           hover:scale-110 hover:shadow-2xl
-                           transition-all duration-300"
+                className="flex-none w-56 h-15 md:w-80 md:h-20 flex items-center justify-center 
+                           bg-white/90 backdrop-blur-sm border border-slate-200/60 rounded-3xl 
+                           shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)]
+                           hover:shadow-[0_20px_50px_-12px_rgba(99,102,241,0.15)] 
+                           hover:-translate-y-2 transition-all duration-300"
               >
                 <img
                   src={client.logo}
                   alt={client.name}
                   draggable={false}
-                  className="max-h-16 object-contain"
+                  className="max-h-12 md:max-h-20 w-[85%] object-contain select-none filter contrast-[1.05]"
                 />
               </div>
             ))}

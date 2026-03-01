@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import {
     Code2,
@@ -21,6 +21,7 @@ const services = [
             'We architect and build bespoke software systems — from ERP platforms to microservices — designed to handle enterprise-grade complexity, integrate seamlessly with existing infrastructure, and scale with your business growth.',
         tag: 'Enterprise Dev',
         number: '01',
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
     },
     {
         icon: Globe,
@@ -30,6 +31,7 @@ const services = [
             'From corporate portals to complex web platforms, we deliver pixel-perfect, blazing-fast web experiences built on modern frameworks. Every project is optimized for performance, accessibility, and measurable business outcomes.',
         tag: 'Web Engineering',
         number: '02',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
     },
     {
         icon: Layout,
@@ -39,6 +41,7 @@ const services = [
             'We implement and customize enterprise CMS platforms — WordPress, Contentful, Strapi, and headless architectures — giving your team full editorial control while maintaining developer-grade performance and security.',
         tag: 'Content Systems',
         number: '03',
+        image: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800',
     },
     {
         icon: ShoppingCart,
@@ -48,6 +51,7 @@ const services = [
             'We build high-converting e-commerce ecosystems on Shopify, WooCommerce, Magento, and custom stacks. From product catalog architecture to checkout optimization and payment gateway integration — built to sell.',
         tag: 'Commerce',
         number: '04',
+        image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=800',
     },
     {
         icon: Share2,
@@ -57,6 +61,7 @@ const services = [
             'Our social media specialists craft data-driven content strategies, manage brand presence across all major platforms, and execute paid social campaigns that generate qualified leads and measurable ROI.',
         tag: 'Digital Marketing',
         number: '05',
+        image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800',
     },
     {
         icon: Search,
@@ -66,6 +71,7 @@ const services = [
             'We deploy technical SEO audits, content architecture strategies, and authority-building link programs that move the needle on search rankings. Our SEO engagements are tied to traffic, leads, and revenue — not vanity metrics.',
         tag: 'Search Optimization',
         number: '06',
+        image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=800',
     },
     {
         icon: Smartphone,
@@ -75,6 +81,7 @@ const services = [
             'From iOS and Android native apps to React Native and Flutter cross-platform solutions, we build mobile experiences that are fast, intuitive, and deeply integrated with your backend systems and business workflows.',
         tag: 'Mobile',
         number: '07',
+        image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800',
     },
     {
         icon: Server,
@@ -84,6 +91,7 @@ const services = [
             'We provide managed cloud hosting, dedicated server infrastructure, and CDN-accelerated delivery on AWS, Azure, and GCP. Our DevOps team handles deployment pipelines, monitoring, security patching, and 24/7 incident response.',
         tag: 'Infrastructure',
         number: '08',
+        image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
     },
 ];
 
@@ -91,10 +99,13 @@ function FeatureBlock({ service }: { service: typeof services[0] }) {
     const [hovered, setHovered] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const blockRef = useRef<HTMLDivElement>(null);
-    const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
+    const { ref, isVisible } = useScrollReveal({ threshold: 0.3 });
+
+    // Auto-activate on mobile when visible
+    const isActive = hovered || (isVisible && typeof window !== 'undefined' && window.innerWidth < 1024);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!blockRef.current) return;
+        if (!blockRef.current || window.innerWidth < 1024) return;
         const rect = blockRef.current.getBoundingClientRect();
         setMousePos({
             x: ((e.clientX - rect.left) / rect.width - 0.5) * 12,
@@ -116,29 +127,46 @@ function FeatureBlock({ service }: { service: typeof services[0] }) {
             onMouseLeave={() => { setHovered(false); setMousePos({ x: 0, y: 0 }); }}
             onMouseMove={handleMouseMove}
         >
-            {/* Background */}
-            <div
-                className="absolute inset-0 transition-all duration-700"
-                style={{
-                    background: hovered
-                        ? 'oklch(0.18 0.08 255)'
-                        : 'oklch(0.10 0.03 265)',
-                }}
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0">
+                <img src={service.image} alt="" className="w-full h-full object-cover grayscale opacity-20" />
+            </div>
+
+            {/* Shutter Animation Overlay */}
+            <div 
+                className="absolute inset-0 z-[1] transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)]"
+                style={{ 
+                    background: 'oklch(0.10 0.03 265)',
+                    transform: isActive ? 'translateY(-100%)' : 'translateY(0%)'
+                }} 
             />
+            
+            {/* Active Dark Overlay (revealed by shutter) */}
+            <div className="absolute inset-0 z-[1] bg-black/60 transition-opacity duration-700" style={{ opacity: isActive ? 1 : 0 }} />
 
             {/* Subtle grid texture */}
             <div
-                className="absolute inset-0 opacity-5"
+                className="absolute inset-0 opacity-5 z-[2]"
                 style={{
                     backgroundImage: 'linear-gradient(oklch(1 0 0 / 0.15) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.15) 1px, transparent 1px)',
                     backgroundSize: '60px 60px',
                 }}
             />
 
-            {/* Animated accent line — draws on hover */}
-            <div className="absolute top-0 left-0 h-0.5 bg-hitcs-accent transition-all duration-700 ease-out"
-                style={{ width: hovered ? '100%' : '0%' }}
+            {/* Animated accent line */}
+            <div className="absolute top-0 left-0 h-0.5 bg-hitcs-accent transition-all duration-700 ease-out z-[10]"
+                style={{ width: isActive ? '100%' : '0%' }}
             />
+
+            {/* Rotating Arrow Top-Right */}
+            <div className="absolute top-8 right-8 z-[10] transition-all duration-500"
+                style={{ 
+                    transform: isActive ? 'rotate(45deg) scale(1.2)' : 'rotate(0deg) scale(1)',
+                    opacity: isActive ? 1 : 0.3
+                }}
+            >
+                <ArrowUpRight size={32} className="text-hitcs-accent" />
+            </div>
 
             {/* Content */}
             <div
@@ -162,18 +190,17 @@ function FeatureBlock({ service }: { service: typeof services[0] }) {
                     <div
                         className="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 transition-all duration-500"
                         style={{
-                            background: hovered ? 'oklch(0.50 0.22 255 / 0.2)' : 'oklch(1 0 0 / 0.04)',
-                            borderColor: hovered ? 'oklch(0.50 0.22 255 / 0.5)' : 'oklch(1 0 0 / 0.1)',
+                            background: isActive ? 'oklch(0.50 0.22 255 / 0.2)' : 'oklch(1 0 0 / 0.04)',
+                            borderColor: isActive ? 'oklch(0.50 0.22 255 / 0.5)' : 'oklch(1 0 0 / 0.1)',
                         }}
                     >
                         <service.icon
                             size={28}
-                            style={{ color: hovered ? 'oklch(0.62 0.20 255)' : 'oklch(1 0 0 / 0.5)' }}
+                            style={{ color: isActive ? 'oklch(0.62 0.20 255)' : 'oklch(1 0 0 / 0.5)' }}
                             className="transition-colors duration-500"
                         />
                     </div>
 
-                    {/* Title with parallax */}
                     <h3
                         className="text-4xl lg:text-5xl font-black text-white tracking-tighter leading-[1.05] mb-6 transition-transform duration-400"
                         style={{
@@ -183,25 +210,23 @@ function FeatureBlock({ service }: { service: typeof services[0] }) {
                         {service.title}
                     </h3>
 
-                    {/* Description — clip reveal from below */}
                     <div className="overflow-hidden">
                         <p
-                            className="text-base text-white/60 leading-relaxed max-w-md transition-all duration-500"
+                            className="text-base text-white/80 leading-relaxed max-w-md transition-all duration-500"
                             style={{
-                                transform: hovered ? 'translateY(0)' : 'translateY(100%)',
-                                opacity: hovered ? 1 : 0,
+                                transform: isActive ? 'translateY(0)' : 'translateY(100%)',
+                                opacity: isActive ? 1 : 0,
                             }}
                         >
                             {service.description}
                         </p>
                     </div>
 
-                    {/* Short text — hides on hover */}
                     <p
                         className="text-base text-white/50 leading-relaxed max-w-md transition-all duration-300 absolute"
                         style={{
-                            opacity: hovered ? 0 : 1,
-                            transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
+                            opacity: isActive ? 0 : 1,
+                            transform: isActive ? 'translateY(-8px)' : 'translateY(0)',
                         }}
                     >
                         {service.short}
@@ -210,7 +235,7 @@ function FeatureBlock({ service }: { service: typeof services[0] }) {
 
                 <div
                     className="flex items-center gap-3 mt-16 transition-all duration-500"
-                    style={{ opacity: hovered ? 1 : 0, transform: hovered ? 'translateY(0)' : 'translateY(10px)' }}
+                    style={{ opacity: isActive ? 1 : 0, transform: isActive ? 'translateY(0)' : 'translateY(10px)' }}
                 >
                     <span className="text-sm font-semibold text-hitcs-accent-light tracking-wide">Explore Capability</span>
                     <ArrowUpRight size={16} className="text-hitcs-accent" />
@@ -224,10 +249,12 @@ function SecondaryBlock({ service, tall = false }: { service: typeof services[0]
     const [hovered, setHovered] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const blockRef = useRef<HTMLDivElement>(null);
-    const { ref, isVisible } = useScrollReveal({ threshold: 0.08 });
+    const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
+
+    const isActive = hovered || (isVisible && typeof window !== 'undefined' && window.innerWidth < 1024);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!blockRef.current) return;
+        if (!blockRef.current || window.innerWidth < 1024) return;
         const rect = blockRef.current.getBoundingClientRect();
         setMousePos({
             x: ((e.clientX - rect.left) / rect.width - 0.5) * 10,
@@ -249,34 +276,40 @@ function SecondaryBlock({ service, tall = false }: { service: typeof services[0]
             onMouseLeave={() => { setHovered(false); setMousePos({ x: 0, y: 0 }); }}
             onMouseMove={handleMouseMove}
         >
-            {/* Background shift */}
-            <div
-                className="absolute inset-0 transition-all duration-600"
-                style={{
-                    background: hovered
-                        ? 'oklch(0.32 0.18 255)'
-                        : 'oklch(0.97 0.003 255)',
-                }}
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0">
+                <img src={service.image} alt="" className="w-full h-full object-cover grayscale opacity-30" />
+            </div>
+
+            {/* Shutter Overlay */}
+            <div 
+                className="absolute inset-0 z-[1] transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)]"
+                style={{ 
+                    background: 'oklch(0.97 0.003 255)',
+                    transform: isActive ? 'translateY(100%)' : 'translateY(0%)'
+                }} 
             />
 
-            {/* Accent line */}
+            {/* Active Dark Overlay */}
+            <div className="absolute inset-0 z-[1] bg-black/70 transition-opacity duration-600" style={{ opacity: isActive ? 1 : 0 }} />
+
             <div
-                className="absolute bottom-0 left-0 h-0.5 transition-all duration-600 ease-out"
+                className="absolute bottom-0 left-0 h-0.5 transition-all duration-600 ease-out z-[10]"
                 style={{
-                    width: hovered ? '100%' : '0%',
+                    width: isActive ? '100%' : '0%',
                     background: 'oklch(0.50 0.22 255)',
                 }}
             />
 
-            {/* Left accent bar */}
-            <div
-                className="absolute top-0 left-0 w-0.5 transition-all duration-500 ease-out"
-                style={{
-                    height: hovered ? '100%' : '0%',
-                    background: 'oklch(0.50 0.22 255 / 0.5)',
-                    transitionDelay: hovered ? '0.1s' : '0s',
+            {/* Top Right Arrow Rotating */}
+            <div className={`absolute bottom-6 cursor-pointer bg-zinc-700 ${isActive ? "bg-zinc-500" : "bg-zinc-700"} p-2 rounded-full right-6 z-[10] transition-all duration-500`}
+                style={{ 
+                    transform: isActive ? 'rotate(45deg)' : 'rotate(0deg)',
+                    opacity: isActive ? 1 : 0.2
                 }}
-            />
+            >
+                <ArrowUpRight size={20} className={isActive ? "text-blue-500" : "text-black"} />
+            </div>
 
             <div
                 className="relative z-10 h-full flex flex-col justify-between p-7 lg:p-8"
@@ -290,37 +323,35 @@ function SecondaryBlock({ service, tall = false }: { service: typeof services[0]
                     <service.icon
                         size={20}
                         className="transition-colors duration-400"
-                        style={{ color: hovered ? 'oklch(0.85 0.12 255)' : 'oklch(0.50 0.22 255)' }}
+                        style={{ color: isActive ? 'oklch(0.85 0.12 255)' : 'oklch(0.50 0.22 255)' }}
                     />
                     <span
                         className="text-xs font-bold tracking-[0.2em] uppercase transition-colors duration-400"
-                        style={{ color: hovered ? 'oklch(0.75 0.15 255)' : 'oklch(0.55 0.02 255)' }}
+                        style={{ color: isActive ? 'oklch(0.75 0.15 255)' : 'oklch(0.55 0.02 255)' }}
                     >
                         {service.tag}
                     </span>
                 </div>
 
                 <div>
-                    {/* Title with parallax */}
                     <h3
                         className="text-2xl lg:text-3xl font-black tracking-tighter leading-tight mb-3 transition-all duration-400"
                         style={{
-                            color: hovered ? 'oklch(1 0 0)' : 'oklch(0.08 0.01 265)',
+                            color: isActive ? 'oklch(1 0 0)' : 'oklch(0.08 0.01 265)',
                             transform: hovered ? `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.25}px)` : 'translate(0,0)',
                         }}
                     >
                         {service.title}
                     </h3>
 
-                    {/* Description clip reveal */}
                     <div className="overflow-hidden">
                         <p
                             className="text-sm leading-relaxed transition-all duration-500"
                             style={{
-                                color: hovered ? 'oklch(1 0 0 / 0.65)' : 'oklch(0.55 0.02 255)',
-                                transform: hovered ? 'translateY(0)' : 'translateY(110%)',
-                                opacity: hovered ? 1 : 0,
-                                maxHeight: hovered ? '120px' : '0',
+                                color: isActive ? 'oklch(1 0 0 / 0.85)' : 'oklch(0.55 0.02 255)',
+                                transform: isActive ? 'translateY(0)' : 'translateY(110%)',
+                                opacity: isActive ? 1 : 0,
+                                maxHeight: isActive ? '120px' : '0',
                             }}
                         >
                             {service.short}
@@ -341,7 +372,6 @@ export default function Services() {
     return (
         <section id="services" className="bg-white section-padding overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-10">
-                {/* Editorial Header */}
                 <div
                     ref={titleRef as React.RefObject<HTMLDivElement>}
                     className={`mb-20 transition-all duration-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
@@ -367,31 +397,22 @@ export default function Services() {
                     </div>
                 </div>
 
-                {/* Asymmetric Editorial Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-hitcs-gray-mid">
-
-                    {/* DOMINANT FEATURE BLOCK — spans 5 cols, 2 rows */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-hitcs-gray-mid border border-hitcs-gray-mid">
                     <div className="lg:col-span-5 lg:row-span-2 bg-white">
                         <FeatureBlock service={featured} />
                     </div>
-
-                    {/* Secondary row 1 — 3 blocks across 7 cols */}
                     <div className="lg:col-span-3 bg-white">
                         <SecondaryBlock service={secondary[0]} tall />
                     </div>
                     <div className="lg:col-span-4 bg-white">
                         <SecondaryBlock service={secondary[1]} tall />
                     </div>
-
-                    {/* Secondary row 2 — 2 blocks */}
                     <div className="lg:col-span-4 bg-white">
                         <SecondaryBlock service={secondary[2]} tall />
                     </div>
                     <div className="lg:col-span-3 bg-white">
                         <SecondaryBlock service={secondary[3]} tall />
                     </div>
-
-                    {/* Bottom row — 3 blocks spanning full width */}
                     <div className="lg:col-span-4 bg-white">
                         <SecondaryBlock service={secondary[4]} />
                     </div>
@@ -403,7 +424,6 @@ export default function Services() {
                     </div>
                 </div>
 
-                {/* Bottom editorial note */}
                 <div className="mt-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-8 border-t border-hitcs-gray-mid">
                     <p className="text-sm text-hitcs-gray-cool max-w-md">
                         Every engagement is scoped, staffed, and delivered by senior practitioners — not junior teams.
