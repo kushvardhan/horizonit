@@ -12,7 +12,7 @@ const projects = [
     stack: ["React", "Node.js", "PostgreSQL", "AWS"],
     stats: ["2M+ Users", "99.99% Uptime", "10M+ Txns"],
     image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1400&auto=format&fit=crop",
+      "https://cdn.dribbble.com/userupload/8234668/file/original-28291b97893c4f81ca435ece2d394ae5.png?resize=1024x768&vertical=center?q=80&w=1400&auto=format&fit=crop",
     gradient: "from-blue-500/50 to-indigo-500/50",
   },
   {
@@ -23,7 +23,7 @@ const projects = [
     stack: ["Next.js", "MongoDB", "Docker", "AWS"],
     stats: ["500K+ Patients", "99.9% Uptime", "1M+ Records"],
     image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?q=80&w=1400&auto=format&fit=crop",
+      "https://colorlib.com/wp/wp-content/uploads/sites/2/docmed-free-template.jpg?q=80&w=1400&auto=format&fit=crop",
     gradient: "from-emerald-500/50 to-teal-500/50",
   },
   {

@@ -493,7 +493,7 @@ export default function IridescentAdvantage() {
         </div>
       </div>
 
-      <style jsx global>{`
+      <style>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }

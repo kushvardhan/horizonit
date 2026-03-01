@@ -182,7 +182,7 @@ export default function ClientReviews() {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .mask-fade-horizontal {
           mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
           -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
