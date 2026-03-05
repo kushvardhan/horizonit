@@ -101,7 +101,7 @@ export default function Navbar(): JSX.Element {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as const}}
             className="fixed inset-0 z-[200] bg-zinc-50 dark:bg-zinc-950 flex flex-col h-screen overflow-hidden"
           >
             {/* 1. STICKY TOP HEADER */}
