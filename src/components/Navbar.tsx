@@ -36,7 +36,7 @@ export default function Navbar(): JSX.Element {
       <header
         className={`fixed inset-x-0 top-0 z-100 transition-all duration-500 ${
           scrolled 
-            ? "py-3 bg-white/80 dark:bg-black/80 backdrop-blur-2xl border-b border-black/5 dark:border-white/10 shadow-sm" 
+            ? "py-3 bg-white/60 dark:bg-black/80 backdrop-blur-2xl border-b border-black/5 dark:border-white/10 shadow-sm" 
             : "py-6 bg-transparent"
         }`}
       >

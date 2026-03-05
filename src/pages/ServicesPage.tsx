@@ -176,7 +176,7 @@ export default function ServicesPage() {
     return () => clearInterval(timer);
   }, []);
   return (
-    <div className="bg-white text-slate-900 antialiased">
+    <div className="bg-slate-950 text-slate-900 antialiased">
       {/* top spacing for navbar (assumes navbar is fixed) */}
       <div className="pt-20" />
 
