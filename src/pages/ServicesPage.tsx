@@ -135,7 +135,7 @@ const heroServices = services.slice(0, 4);
 /* ----- Animation Variants ----- */
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 };
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -165,7 +165,7 @@ export default function ServicesPage() {
 
   const reveal = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.8 } },
   };
 
   // Auto-cycle accordion every 5 seconds
@@ -189,10 +189,10 @@ export default function ServicesPage() {
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000')" }}
         />
         {/* The "HCL" Deep Gradient: Dark top, transparent middle, white bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/40 to-white" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-900/40 to-white" />
         
         {/* Subtle Grid overlay */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] bg-[size:100px_100px]" />
+        <div className="absolute inset-0 opacity-3 bg-[linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] bg-size-[100px_100px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full mt-10">
@@ -216,7 +216,7 @@ export default function ServicesPage() {
 
             <motion.h1 variants={reveal} className="text-5xl md:text-7xl font-bold text-white leading-[1.1] tracking-tight">
               Engineering <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500">
                 Digital Frontiers
               </span>
             </motion.h1>
@@ -311,7 +311,7 @@ export default function ServicesPage() {
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 hidden md:block"
       >
-        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500 to-transparent" />
+        <div className="w-px h-12 bg-linear-to-b from-cyan-500 to-transparent" />
       </motion.div>
     </section>
 
@@ -383,7 +383,7 @@ export default function ServicesPage() {
       {svc.number}
     </div>
 
-    <div className="grid md:grid-cols-2 min-h-[420px]">
+    <div className="grid md:grid-cols-2 min-h-105">
       
       {/* TEXT SIDE */}
       <div className={`p-12 flex flex-col justify-center ${even ? "" : "md:order-2"}`}>
@@ -403,7 +403,7 @@ export default function ServicesPage() {
           initial={{ width: 0 }}
           whileInView={{ width: 80 }}
           transition={{ duration: 0.8 }}
-          className={`h-[2px] mb-6 ${even ? "bg-blue-600" : "bg-blue-400"}`}
+          className={`h-0.5 mb-6 ${even ? "bg-blue-600" : "bg-blue-400"}`}
         />
 
         {/* Description */}
@@ -445,7 +445,7 @@ export default function ServicesPage() {
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/40 to-transparent" />
 
           {/* Frame */}
           <div className="absolute inset-6 border border-white/20" />

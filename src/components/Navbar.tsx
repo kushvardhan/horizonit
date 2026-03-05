@@ -34,14 +34,14 @@ export default function Navbar(): JSX.Element {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[100] transition-all duration-500 ${
+        className={`fixed inset-x-0 top-0 z-100 transition-all duration-500 ${
           scrolled 
             ? "py-3 bg-white/80 dark:bg-black/80 backdrop-blur-2xl border-b border-black/5 dark:border-white/10 shadow-sm" 
             : "py-6 bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <NavLink to="/" className="relative z-[110] flex items-center">
+          <NavLink to="/" className="relative z-110 flex items-center">
             <img
               src="/new_hitcsLogo.png"
               alt="Company logo"
@@ -71,7 +71,7 @@ export default function Navbar(): JSX.Element {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4 relative z-[110]">
+          <div className="flex items-center gap-4 relative z-110">
             <NavLink
               to="/contact"
               className={`hidden md:flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:-translate-y-1 shadow-[0_4px_0_0_rgba(0,0,0,0.1)] active:shadow-none active:translate-y-0 ${
@@ -101,11 +101,11 @@ export default function Navbar(): JSX.Element {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as const}}
-            className="fixed inset-0 z-[200] bg-zinc-50 dark:bg-zinc-950 flex flex-col h-screen overflow-hidden"
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-200 bg-zinc-50 dark:bg-zinc-950 flex flex-col h-screen overflow-hidden"
           >
             {/* 1. STICKY TOP HEADER */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-black/[0.03] dark:border-white/[0.03] bg-white dark:bg-zinc-950">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-black/3 dark:border-white/3 bg-white dark:bg-zinc-950">
               <img src="/new_hitcsLogo.png" alt="Logo" className="h-7 brightness-100" />
               <button
                 onClick={() => setMobileOpen(false)}
@@ -165,7 +165,7 @@ export default function Navbar(): JSX.Element {
 
                 {/* INFO TILES */}
                 <div className="grid grid-cols-1 gap-3">
-                  <div className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900/50 border border-black/[0.03] dark:border-white/[0.03] rounded-2xl">
+                  <div className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900/50 border border-black/3 dark:border-white/3 rounded-2xl">
                     <div className="p-2.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 rounded-xl">
                       <Mail size={18} />
                     </div>
@@ -175,7 +175,7 @@ export default function Navbar(): JSX.Element {
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/50 border border-black/[0.03] dark:border-white/[0.03] rounded-2xl">
+                  <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/50 border border-black/3 dark:border-white/3 rounded-2xl">
                     <div className="flex items-center gap-4">
                       <div className="p-2.5 bg-zinc-100 dark:bg-white/5 text-zinc-500 rounded-xl">
                         <Globe size={18} />
@@ -195,7 +195,7 @@ export default function Navbar(): JSX.Element {
             </div>
 
             {/* 4. MINIMAL LEGAL STRIP */}
-            <div className="px-6 py-5 border-t border-black/[0.03] dark:border-white/[0.03] flex justify-between items-center bg-white dark:bg-zinc-950">
+            <div className="px-6 py-5 border-t border-black/3 dark:border-white/3 flex justify-between items-center bg-white dark:bg-zinc-950">
               <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">© 2026 HITCS</span>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
