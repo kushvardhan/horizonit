@@ -78,7 +78,7 @@ export default function HeroSlider() {
     const slide = slides[current];
 
     return (
-        <section className="relative w-full h-screen overflow-hidden">
+        <section className="relative w-full h-auto overflow-hidden">
             {/* Background Images */}
             {slides.map((s, i) => (
                 <div

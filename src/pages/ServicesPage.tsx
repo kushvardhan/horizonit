@@ -1,6 +1,6 @@
 // src/pages/Services.tsx
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 /**
  * Services Page — upgraded per request
@@ -135,7 +135,7 @@ const heroServices = services.slice(0, 4);
 /* ----- Animation Variants ----- */
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 };
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -145,12 +145,28 @@ const staggerContainer = {
 /* ----- animation variants ----- */
 const reveal = { hidden: { opacity: 0, y: 22 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
-
+const SERVICES = [
+  { id: '01', title: 'Cloud Transformation', desc: 'Hybrid and multi-cloud strategies engineered for maximum resilience.', tag: 'INFRASTRUCTURE' },
+  { id: '02', title: 'AI & Data Engineering', desc: 'Transforming raw data into actionable intelligence with custom LLMs.', tag: 'INTELLIGENCE' },
+  { id: '03', title: 'Cyber Security', desc: 'Zero-trust architecture protecting your most critical digital assets.', tag: 'SECURITY' },
+  { id: '04', title: 'Digital Consulting', desc: 'Bridging the gap between legacy systems and future-ready platforms.', tag: 'STRATEGY' },
+];
 
 
 /* ----- Component ----- */
 export default function ServicesPage() {
   const [activeAccordion, setActiveAccordion] = useState(0);
+  const [expanded, setExpanded] = useState(0);
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const reveal = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+  };
 
   // Auto-cycle accordion every 5 seconds
   useEffect(() => {
@@ -165,154 +181,139 @@ export default function ServicesPage() {
       <div className="pt-20" />
 
       {/* HERO */}
-      <section className="relative h-[88vh] min-h-[680px] flex items-center overflow-hidden">
-        {/* stronger visible background image (less white overlay so image is crisper) */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000')",
-          }}
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
+      {/* BACKGROUND LAYER */}
+      <div className="absolute inset-0 z-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center scale-105"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000')" }}
         />
+        {/* The "HCL" Deep Gradient: Dark top, transparent middle, white bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/40 to-white" />
+        
+        {/* Subtle Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] bg-[size:100px_100px]" />
+      </div>
 
-        {/* soft diagonal/blur to add blockiness */}
-        <div aria-hidden className="absolute -right-48 -top-24 w-[720px] h-[720px] bg-gradient-to-tr from-cyan-100 to-transparent opacity-20 blur-[90px] rotate-[12deg]" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full mt-10">
+        <div className="grid lg:grid-cols-12 gap-16 items-center">
+          
+          {/* LEFT CONTENT */}
+          <motion.div 
+            className="lg:col-span-7"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.div variants={reveal} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>
+              Digital Excellence
+            </motion.div>
 
-        {/* grid overlay (very subtle) */}
-        <div className="absolute inset-0 opacity-5 bg-[linear-gradient(#000_1px,transparent_1px),linear-gradient(90deg,#000_1px,transparent_1px)] bg-[size:60px_60px]" />
+            <motion.h1 variants={reveal} className="text-5xl md:text-7xl font-bold text-white leading-[1.1] tracking-tight">
+              Engineering <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                Digital Frontiers
+              </span>
+            </motion.h1>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-          <div className="grid lg:grid-cols-12 gap-8 items-start">
-            {/* LEFT content: reduced width to make it less heavy */}
-            <div className="lg:col-span-6">
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="">
-                <motion.div variants={reveal} className="font-space-mono text-xs text-cyan-600 tracking-widest mb-3">[ SERVICES ]</motion.div>
+            <motion.p variants={reveal} className="mt-8 text-lg md:text-xl text-slate-300 max-w-xl leading-relaxed font-light">
+              HorizonIT delivers enterprise-grade infrastructure. We architect scalable, secure, and measurable platforms for the world's leading modern businesses.
+            </motion.p>
 
-                <motion.h1 variants={reveal} className="text-4xl md:text-4.5xl lg:text-5xl font-syne font-extrabold leading-tight max-w-xl">
-                  Engineering{" "}
-                  <span className="text-slate-900">Digital</span>
-                  <br />
-                  <span className="text-cyan-600">Infrastructure</span>
-                  <br />
-                  For Modern Business
-                </motion.h1>
+            <motion.div variants={reveal} className="mt-10 flex flex-wrap gap-5">
+              <button className="px-8 py-4 bg-cyan-600 text-white font-semibold rounded-sm hover:bg-cyan-500 hover:shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all duration-300">
+                Start a Consultation
+              </button>
+              <button className="px-8 py-4 border border-white/20 text-white font-semibold rounded-sm hover:bg-white/10 transition-all backdrop-blur-sm">
+                Explore Solutions
+              </button>
+            </motion.div>
 
-                <motion.div variants={reveal} className="mt-5 w-32 h-1 bg-cyan-600 origin-left" />
+            {/* Micro Stats */}
+            <motion.div variants={reveal} className="mt-12 flex gap-10 border-t border-white/10 pt-8">
+              <div>
+                <div className="text-2xl font-bold text-white">99.9%</div>
+                <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">Uptime SLA</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">250+</div>
+                <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">Deployments</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">Global</div>
+                <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">Operations</div>
+              </div>
+            </motion.div>
+          </motion.div>
 
-                <motion.p variants={reveal} className="mt-5 text-base md:text-lg text-slate-600 max-w-lg leading-relaxed">
-                  HorizonIT partners with enterprises to architect and deliver scalable, secure and measurable digital platforms — combining domain expertise,
-                  engineering rigor and operational excellence.
-                </motion.p>
-
-                <motion.div variants={reveal} className="mt-7 flex gap-4">
-                  <a href="#contact" className="inline-flex items-center gap-3 bg-cyan-600 text-white px-5 py-3 rounded-sm shadow hover:shadow-cyan-glow transition">
-                    Start a Project
-                  </a>
-                  <a href="#services" className="inline-flex items-center gap-2 px-4 py-3 border border-slate-200 rounded-sm hover:border-cyan-600 hover:text-cyan-600 transition">
-                    View Services
-                  </a>
-                </motion.div>
-
-                {/* Trust / capability micro-strip */}
-                <motion.div variants={reveal} className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="flex items-start gap-3 p-3 rounded-sm">
-                    <div className="w-9 h-9 rounded-sm bg-cyan-50 text-cyan-600 flex items-center justify-center">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+          {/* RIGHT SIDE: PREMIUM ACCORDION */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            {SERVICES.map((service, idx) => (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                onClick={() => setExpanded(idx)}
+                className={`cursor-pointer overflow-hidden rounded-lg border transition-all duration-500 ${
+                  expanded === idx 
+                  ? 'bg-white/15 border-white/30 shadow-2xl backdrop-blur-xl' 
+                  : 'bg-white/5 border-white/10 hover:bg-white/10 backdrop-blur-md'
+                }`}
+              >
+                <div className="p-6">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <span className={`text-xs font-mono transition-colors ${expanded === idx ? 'text-cyan-400' : 'text-slate-500'}`}>
+                        {service.id}
+                      </span>
+                      <h3 className={`text-lg font-semibold transition-colors ${expanded === idx ? 'text-white' : 'text-slate-300'}`}>
+                        {service.title}
+                      </h3>
                     </div>
-                    <div>
-                      <div className="text-xs font-space-mono text-slate-500 uppercase">Reliability</div>
-                      <div className="text-sm font-medium text-slate-800">SLA-driven operations & 24/7 monitoring</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 rounded-sm">
-                    <div className="w-9 h-9 rounded-sm bg-cyan-50 text-cyan-600 flex items-center justify-center">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v18" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-                    </div>
-                    <div>
-                      <div className="text-xs font-space-mono text-slate-500 uppercase">Scale</div>
-                      <div className="text-sm font-medium text-slate-800">Architectures built to grow with you</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 rounded-sm">
-                    <div className="w-9 h-9 rounded-sm bg-cyan-50 text-cyan-600 flex items-center justify-center">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v6c0 5-7 8-7 8s-7-3-7-8V7l7-4z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
-                    </div>
-                    <div>
-                      <div className="text-xs font-space-mono text-slate-500 uppercase">Security</div>
-                      <div className="text-sm font-medium text-slate-800">Enterprise-grade controls & compliance</div>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-
-            {/* RIGHT: quick grid (kept compact, visually rich) */}
-            <div className="lg:col-span-6">
-              <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid grid-cols-2 gap-4">
-                {/* Large featured tile */}
-                <div className="col-span-2 grid grid-cols-2 gap-3">
-                  <div className="relative rounded-sm overflow-hidden border border-slate-100 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200" alt="platform" className="w-full h-44 object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white/75 to-transparent p-4 flex items-end">
-                      <div>
-                        <div className="text-xs font-space-mono text-slate-500">Featured</div>
-                        <div className="text-sm font-semibold text-slate-900">Platform Engineering</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-3">
-                    <div className="glass-card relative overflow-hidden">
-                      <div className="p-4">
-                        <div className="text-xs font-space-mono text-slate-500">Cloud</div>
-                        <div className="font-medium text-slate-900">Scalable infra that reduces cost at scale</div>
-                      </div>
-                    </div>
-
-                    <div className="glass-card relative overflow-hidden">
-                      <div className="p-4">
-                        <div className="text-xs font-space-mono text-slate-500">API</div>
-                        <div className="font-medium text-slate-900">Connect systems with secure, versioned APIs</div>
-                      </div>
+                    <div className={`w-6 h-6 flex items-center justify-center rounded-full border border-white/20 text-white transition-transform duration-500 ${expanded === idx ? 'rotate-45 bg-cyan-600 border-none' : ''}`}>
+                      +
                     </div>
                   </div>
+
+                  <AnimatePresence>
+                    {expanded === idx && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: "circOut" }}
+                      >
+                        <div className="pt-4 text-slate-300 text-sm leading-relaxed">
+                          <p className="mb-4">{service.desc}</p>
+                          <span className="text-[10px] font-bold tracking-[0.2em] text-cyan-500 uppercase">
+                            Focus: {service.tag}
+                          </span>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-
-                {/* quick option tiles */}
-                {SERVICES_QUICK.map((s) => (
-                  <motion.button key={s.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.985 }} className="group relative rounded-sm border border-slate-200 p-3 flex flex-col items-start gap-2 text-left hover:border-cyan-600 transition bg-white">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-sm bg-cyan-50 text-cyan-600 flex items-center justify-center">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                          <path d="M12 2v20M3 12h18" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                        </svg>
-                      </div>
-                      <div className="text-sm font-semibold text-slate-900">{s.title}</div>
-                    </div>
-                    <div className="text-xs font-space-mono text-slate-500">{s.tag}</div>
-
-                    {/* small shutter label */}
-                    <span className="absolute right-3 top-3 text-xs px-2 py-0.5 rounded-sm border border-slate-100 bg-white/70 opacity-0 group-hover:opacity-100 transition">Explore</span>
-                  </motion.button>
-                ))}
               </motion.div>
-            </div>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-
-        {/* scroll hint */}
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.6, repeat: Infinity }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-[2px] h-10 bg-slate-300 rounded-sm flex items-start">
-            <div className="w-[2px] h-3 bg-cyan-600 animate-bounce" />
-          </div>
-        </motion.div>
-      </section>
+      {/* Scroll indicator with refined style */}
+      <motion.div 
+        animate={{ y: [0, 10, 0] }} 
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 hidden md:block"
+      >
+        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500 to-transparent" />
+      </motion.div>
+    </section>
 
       {/* Our Capabilities (glass cards) */}
       <section className="max-w-7xl mx-auto px-6 py-16">

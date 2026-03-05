@@ -31,36 +31,7 @@ export default function WhoWeAre() {
 
                 {/* Main Split Layout */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24 items-center">
-                    {/* Image Side */}
-                    <div
-                        ref={imageRef as React.RefObject<HTMLDivElement>}
-                        className={`relative ${imageVisible ? 'reveal-visible-x' : 'reveal-hidden-left'}`}
-                        style={{ transition: 'opacity 0.8s ease, transform 0.8s ease' }}
-                    >
-                        {/* Main image */}
-                        <div className="relative">
-                            <div className="absolute -top-4 -left-4 w-full h-full border-2 border-hitcs-accent/30 z-0" />
-                            <div className="relative z-10 overflow-hidden">
-                                <img
-                                    src="/whoweare-bg.dim_960x720.png?w=960&h=820&fit=crop"
-                                    alt="HITCS — Who We Are"
-                                    className="w-full h-auto object-cover"
-                                    style={{ maxHeight: '520px', objectFit: 'cover' }}
-                                />
-                                <div className="absolute inset-0 bg-linear-to-t from-hitcs-blue/40 to-transparent" />
-                            </div>
-                            {/* Floating badge */}
-                            <div className="absolute -bottom-6 -right-6 bg-hitcs-blue text-white p-6 z-20 shadow-blue">
-                                <div className="text-3xl font-black tracking-tight">15+</div>
-                                <div className="text-xs font-medium text-white/80 tracking-wide mt-1">
-                                    Years of<br />Excellence
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Decorative block */}
-                        <div className="absolute top-8 -right-8 w-16 h-16 bg-hitcs-accent/20 hidden xl:block" />
-                    </div>
+                    
 
                     {/* Content Side */}
                     <div
@@ -115,6 +86,37 @@ export default function WhoWeAre() {
                             Partner With Us
                             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
                         </button>
+                    </div>
+
+                    {/* Image Side */}
+                    <div
+                        ref={imageRef as React.RefObject<HTMLDivElement>}
+                        className={`relative ${imageVisible ? 'reveal-visible-x' : 'reveal-hidden-left'}`}
+                        style={{ transition: 'opacity 0.8s ease, transform 0.8s ease' }}
+                    >
+                        {/* Main image */}
+                        <div className="relative">
+                            <div className="absolute -top-4 -left-4 w-full h-full border-2 border-hitcs-accent/30 z-0" />
+                            <div className="relative z-10 overflow-hidden">
+                                <img
+                                    src="/whoweare-bg.dim_960x720.png?w=960&h=820&fit=crop"
+                                    alt="HITCS — Who We Are"
+                                    className="w-full h-auto object-cover"
+                                    style={{ maxHeight: '520px', objectFit: 'cover' }}
+                                />
+                                <div className="absolute inset-0 bg-linear-to-t from-hitcs-blue/40 to-transparent" />
+                            </div>
+                            {/* Floating badge */}
+                            <div className="absolute -bottom-6 -right-6 bg-hitcs-blue text-white p-6 z-20 shadow-blue">
+                                <div className="text-3xl font-black tracking-tight">15+</div>
+                                <div className="text-xs font-medium text-white/80 tracking-wide mt-1">
+                                    Years of<br />Excellence
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Decorative block */}
+                        <div className="absolute top-8 -right-8 w-16 h-16 bg-hitcs-accent/20 hidden xl:block" />
                     </div>
                 </div>
             </div>
